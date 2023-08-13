@@ -13,13 +13,11 @@ public class PlayerController : MonoBehaviour
         Idle,
         Shooting
     }
-
+    [SerializeField] private Timer _gunReloadTimer;
     [SerializeField] private Transform _aimGunHead;
     [SerializeField] private SkinnedMeshRenderer _gunMeshRenderer;
     [SerializeField] private PlayerData _playerData;
-    [SerializeField] private PlayerController _playerController;
     [SerializeField] private float _gunAimSensitivity = 0.3f;
-    private float _durationBetweenBullets;
     private float _gunAimX = 0f;
     private float _gunAimY = 0f;
 
@@ -33,7 +31,6 @@ public class PlayerController : MonoBehaviour
                 break;
             case GameState.Gameplay:
                 SwitchPlayerState();
-                DecreaseReloadBulletTimer();
                 break;
             case GameState.Win:
                 break;
@@ -89,36 +86,29 @@ public class PlayerController : MonoBehaviour
 
         _aimGunHead.transform.localRotation = Quaternion.Euler(-_gunAimY, _gunAimX, 0);
     }
-
-    private void DecreaseReloadBulletTimer()
-    {
-        _durationBetweenBullets -= Time.deltaTime;
-    }
-
+    
     private void ResetDurationBetweenBullets()
     {
-        _durationBetweenBullets = _playerData.BulletReloadDuration;
+        _gunReloadTimer.SetTimer(_playerData.GunReloadTime);
     }
-
-
+    
     private IEnumerator SpawnBulletFromObjectPool()
     {
-        while (_durationBetweenBullets > 0)
+        while (_gunReloadTimer.CurrentTime > 0)
         {
             yield break;
         }
 
         ResetDurationBetweenBullets();
         var objectPool = ObjectPool.Instance;
-        var randomIndex = Random.Range(0, objectPool.Pools.Length);
-        var spawnedRandomBullet = objectPool.GetPooledObject(randomIndex);
+        var spawnedBullet = objectPool.GetPooledObject(0);
         //spawnedRandomBullet.transform.SetParent(null); // todo it gives null ref?!
 
         yield return new WaitForSeconds(2f);
 
-        objectPool.SetPooledObject(spawnedRandomBullet, randomIndex);
+        objectPool.SetPooledObject(spawnedBullet, 0);
         //spawnedRandomBullet.transform.SetParent(objectPool.transform); 
-        spawnedRandomBullet.transform.ResetLocalPos();
-        spawnedRandomBullet.transform.ResetLocalRot();
+        spawnedBullet.transform.ResetLocalPos();
+        spawnedBullet.transform.ResetLocalRot();
     }
 }

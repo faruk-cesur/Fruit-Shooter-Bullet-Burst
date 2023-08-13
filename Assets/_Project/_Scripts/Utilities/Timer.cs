@@ -6,26 +6,26 @@ public class Timer : MonoBehaviour
 {
     public event Action OnTimerEnded;
     public event Action OnTimerChanged;
-    public float Time { get; private set; } = 0.0f;
-    public float Target { get; private set; } = 5.0f;
-    public float Speed { get; private set; } = 1.0f;
-    public string Name { get; private set; } = "Timer";
+    [field: SerializeField] public float CurrentTime { get; private set; } = 0.0f;
+    [field: SerializeField] public float TargetTime { get; private set; } = 5.0f;
+    [field: SerializeField] public float TimeSpeed { get; private set; } = 1.0f;
+    [field: SerializeField] public string TimerName { get; private set; } = "Timer";
 
-    public void SetTimer(float timerTarget, float timeSpeed = 1.0f)
+    public void SetTimer(float targetTime, float timeSpeed = 1.0f)
     {
-        Speed = timeSpeed;
-        Target = timerTarget;
+        TargetTime = targetTime;
+        TimeSpeed = timeSpeed;
     }
 
     public IEnumerator StartTimer()
     {
-        Time = 0.0f;
-        float timeLapse = 1.0f * Speed;
+        CurrentTime = 0.0f;
+        float timeLapse = 1.0f * TimeSpeed;
 
-        while (Time < Target)
+        while (CurrentTime < TargetTime)
         {
             yield return new WaitForSeconds(timeLapse);
-            Time += timeLapse;
+            CurrentTime += timeLapse;
 
             OnTimeChangeHandler();
         }
