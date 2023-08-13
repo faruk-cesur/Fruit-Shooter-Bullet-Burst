@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
         Idle,
         Shooting
     }
+    [SerializeField] private ObjectPool _bulletObjectPool;
     [SerializeField] private Timer _gunReloadTimer;
     [SerializeField] private Transform _aimGunHead;
     [SerializeField] private SkinnedMeshRenderer _gunMeshRenderer;
@@ -100,13 +101,12 @@ public class PlayerController : MonoBehaviour
         }
 
         ResetDurationBetweenBullets();
-        var objectPool = ObjectPool.Instance;
-        var spawnedBullet = objectPool.GetPooledObject(0);
+        var spawnedBullet = _bulletObjectPool.GetPooledObject(0);
         //spawnedRandomBullet.transform.SetParent(null); // todo it gives null ref?!
 
         yield return new WaitForSeconds(2f);
 
-        objectPool.SetPooledObject(spawnedBullet, 0);
+        _bulletObjectPool.SetPooledObject(spawnedBullet, 0);
         //spawnedRandomBullet.transform.SetParent(objectPool.transform); 
         spawnedBullet.transform.ResetLocalPos();
         spawnedBullet.transform.ResetLocalRot();

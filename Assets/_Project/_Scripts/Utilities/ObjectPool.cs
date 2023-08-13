@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    private static ObjectPool _instance;
-    public static ObjectPool Instance => _instance ??= FindObjectOfType<ObjectPool>();
-
     [Serializable]
     public struct Pool
     {
@@ -19,8 +16,6 @@ public class ObjectPool : MonoBehaviour
 
     private void Awake()
     {
-        MakeSingleton();
-
         for (int i = 0; i < Pools.Length; i++)
         {
             Pools[i].PooledObject = new Queue<GameObject>();
@@ -30,18 +25,6 @@ public class ObjectPool : MonoBehaviour
                 obj.SetActive(false);
                 Pools[i].PooledObject.Enqueue(obj);
             }
-        }
-    }
-
-    private void MakeSingleton()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
 

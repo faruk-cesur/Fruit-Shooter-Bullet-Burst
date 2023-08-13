@@ -8,6 +8,7 @@ public class ItemSpawner : MonoBehaviour
 {    
     [SerializeField] private ItemSpawnerData _itemSpawnerData;
     [SerializeField] private Timer _itemSpawnTimer;
+    [SerializeField] private ObjectPool _itemObjectPool;
 
     private void Update()
     {
@@ -30,14 +31,14 @@ public class ItemSpawner : MonoBehaviour
         }
 
         ResetSpawnTime();
-        var objectPool = ObjectPool.Instance;
-        var randomIndex = Random.Range(0, objectPool.Pools.Length);
-        var spawnedRandomItem = objectPool.GetPooledObject(randomIndex);
+        
+        var randomIndex = Random.Range(0, _itemObjectPool.Pools.Length);
+        var spawnedRandomItem = _itemObjectPool.GetPooledObject(randomIndex);
         //spawnedRandomBullet.transform.SetParent(null); // todo it gives null ref?!
 
         yield return new WaitForSeconds(2f);
 
-        objectPool.SetPooledObject(spawnedRandomItem, randomIndex);
+        _itemObjectPool.SetPooledObject(spawnedRandomItem, randomIndex);
         //spawnedRandomBullet.transform.SetParent(objectPool.transform); 
         spawnedRandomItem.transform.ResetLocalPos();
         spawnedRandomItem.transform.ResetLocalRot();
