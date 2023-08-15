@@ -729,10 +729,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b20b4f94e0e3d8468d10575a4038995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CurrentTime>k__BackingField: 0
-  <TargetTime>k__BackingField: 5
-  <TimeSpeed>k__BackingField: 1
   <TimerName>k__BackingField: Timer
+  <TargetTime>k__BackingField: 5
+  <CurrentTime>k__BackingField: 0
+  <IsTimerEnded>k__BackingField: 0
 --- !u!114 &704038087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -941,6 +941,7 @@ GameObject:
   - component: {fileID: 955361945}
   - component: {fileID: 955361943}
   - component: {fileID: 955361946}
+  - component: {fileID: 955361947}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -976,10 +977,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b20b4f94e0e3d8468d10575a4038995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CurrentTime>k__BackingField: 0
-  <TargetTime>k__BackingField: 5
-  <TimeSpeed>k__BackingField: 1
   <TimerName>k__BackingField: Gun Reload Timer
+  <TargetTime>k__BackingField: 5
+  <CurrentTime>k__BackingField: 0
+  <IsTimerEnded>k__BackingField: 0
 --- !u!114 &955361944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1002,6 +1003,7 @@ MonoBehaviour:
   _bulletObjectPool: {fileID: 955361945}
   _gunReloadTimer: {fileID: 955361943}
   _disableAimTimer: {fileID: 955361946}
+  _mistouchTimer: {fileID: 955361947}
   _playerVisual: {fileID: 572879864}
   _stickmanRig: {fileID: 445070223}
   _stickmanModel: {fileID: 445070221}
@@ -1031,10 +1033,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b20b4f94e0e3d8468d10575a4038995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CurrentTime>k__BackingField: 0
-  <TargetTime>k__BackingField: 2
-  <TimeSpeed>k__BackingField: 1
   <TimerName>k__BackingField: Disable Aim Timer
+  <TargetTime>k__BackingField: 2
+  <CurrentTime>k__BackingField: 0
+  <IsTimerEnded>k__BackingField: 0
+--- !u!114 &955361947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955361941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b20b4f94e0e3d8468d10575a4038995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <TimerName>k__BackingField: Mistouch Timer
+  <TargetTime>k__BackingField: 0.5
+  <CurrentTime>k__BackingField: 0
+  <IsTimerEnded>k__BackingField: 1
 --- !u!1 &992596916
 GameObject:
   m_ObjectHideFlags: 3

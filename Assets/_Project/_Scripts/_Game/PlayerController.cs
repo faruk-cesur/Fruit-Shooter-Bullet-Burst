@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("SETUP")] private ObjectPool _bulletObjectPool;
     [SerializeField, BoxGroup("SETUP")] private Timer _gunReloadTimer;
     [SerializeField, BoxGroup("SETUP")] private Timer _disableAimTimer;
+    [SerializeField, BoxGroup("SETUP")] private Timer _mistouchTimer;
     [SerializeField, BoxGroup("SETUP")] private Transform _playerVisual;
     [SerializeField, BoxGroup("SETUP")] private GameObject _stickmanRig;
     [SerializeField, BoxGroup("SETUP")] private GameObject _stickmanModel;
@@ -62,6 +63,53 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void HandleTouchInput()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    if (_mistouchTimer.IsTimerEnded)
+                    {
+                        SwitchPlayerState();
+                    }
+
+                    break;
+                case TouchPhase.Moved:
+                    UpdateAimPosition(touch);
+                    _disableAimTimer.ResetCurrentTime();
+                    //StartCoroutine(SpawnBulletFromObjectPool());
+                    break;
+                case TouchPhase.Stationary:
+                    UpdateAimPosition(touch);
+                    _disableAimTimer.ResetCurrentTime();
+                    //StartCoroutine(SpawnBulletFromObjectPool());
+                    break;
+                case TouchPhase.Ended:
+                    _mistouchTimer.StartTimer();
+                    ResetAimRotation();
+                    SwitchPlayerState();
+                    _disableAimTimer.ResetCurrentTime();
+                    ShootOnReleaseTouch();
+                    break;
+                case TouchPhase.Canceled:
+                    _mistouchTimer.StartTimer();
+                    ResetAimRotation();
+                    SwitchPlayerState();
+                    _disableAimTimer.ResetCurrentTime();
+                    ShootOnReleaseTouch();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        LimitAndRotateAim();
+    }
+
     private void SwitchPlayerState()
     {
         switch (PlayerState)
@@ -81,46 +129,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void HandleTouchInput()
-    {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            switch (touch.phase)
-            {
-                case TouchPhase.Began:
-                    SwitchPlayerState();
-                    break;
-                case TouchPhase.Moved:
-                    UpdateAimPosition(touch);
-                    _disableAimTimer.ResetCurrentTime();
-                    //StartCoroutine(SpawnBulletFromObjectPool());
-                    break;
-                case TouchPhase.Stationary:
-                    UpdateAimPosition(touch);
-                    //StartCoroutine(SpawnBulletFromObjectPool());
-                    break;
-                case TouchPhase.Ended:
-                    ResetAimRotation();
-                    SwitchPlayerState();
-                    _disableAimTimer.ResetCurrentTime();
-                    ShootOnReleaseTouch();
-                    break;
-                case TouchPhase.Canceled:
-                    ResetAimRotation();
-                    SwitchPlayerState();
-                    _disableAimTimer.ResetCurrentTime();
-                    ShootOnReleaseTouch();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        LimitAndRotateAim();
-    }
-
     private void OnDisableAimTimerEnded()
     {
         StartCoroutine(IdleStateCoroutine());
@@ -132,9 +140,6 @@ public class PlayerController : MonoBehaviour
         PlayerState = PlayerStates.Idle;
         _cameraController.EnableIdleCamera();
         SetAimUICanvas(0f, 0.25f);
-
-        //yield return new WaitForSeconds(0.5f);
-
         SetStickmanVisual(true);
 
         yield return new WaitUntil(() => _cameraController.IsCameraBlendCompleted);
@@ -147,19 +152,22 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator ShootingStateCoroutine()
     {
+        if (!_mistouchTimer.IsTimerEnded)
+            yield break;
+
         PlayerState = PlayerStates.Shooting;
         _cameraController.EnableShootingCamera();
         _stickmanAnimator.SetTrigger(Shooting);
 
         yield return new WaitUntil(() => _cameraController.IsCameraBlendCompleted);
 
-        if (PlayerState == PlayerStates.Idle)
-            yield break;
-
-        PlayerState = PlayerStates.Aiming;
-        _disableAimTimer.StartTimer();
-        SetStickmanVisual(false);
-        SetAimUICanvas(1f, 0.25f);
+        if (PlayerState == PlayerStates.Shooting)
+        {
+            PlayerState = PlayerStates.Aiming;
+            _disableAimTimer.StartTimer();
+            SetStickmanVisual(false);
+            SetAimUICanvas(1f, 0.25f);
+        }
     }
 
     private void ShootOnReleaseTouch()

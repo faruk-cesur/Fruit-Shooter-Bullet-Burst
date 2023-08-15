@@ -5,7 +5,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ItemSpawner : MonoBehaviour
-{    
+{
     [SerializeField] private ItemSpawnerData _itemSpawnerData;
     [SerializeField] private Timer _itemSpawnTimer;
     [SerializeField] private ObjectPool _itemObjectPool;
@@ -14,7 +14,7 @@ public class ItemSpawner : MonoBehaviour
     {
         _itemSpawnTimer.SetTimer(_itemSpawnerData.SpawnTime);
     }
-    
+
     private IEnumerator SpawnItemFromObjectPool()
     {
         while (_itemSpawnTimer.CurrentTime > 0)
@@ -23,7 +23,7 @@ public class ItemSpawner : MonoBehaviour
         }
 
         ResetSpawnTime();
-        
+
         var randomIndex = Random.Range(0, _itemObjectPool.Pools.Length);
         var spawnedRandomItem = _itemObjectPool.GetPooledObject(randomIndex);
         //spawnedRandomBullet.transform.SetParent(null); // todo it gives null ref?!
