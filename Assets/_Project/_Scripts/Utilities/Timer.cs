@@ -10,6 +10,8 @@ public class Timer : MonoBehaviour
     [field: SerializeField] public float TargetTime { get; private set; } = 5.0f;
     [field: SerializeField] public float TimeSpeed { get; private set; } = 1.0f;
     [field: SerializeField] public string TimerName { get; private set; } = "Timer";
+    [field: SerializeField] public bool IsTimerEnded { get; private set; } = false;
+    private Coroutine _timerCoroutine;
 
     public void SetTimer(float targetTime, float timeSpeed = 1.0f)
     {
@@ -17,9 +19,25 @@ public class Timer : MonoBehaviour
         TimeSpeed = timeSpeed;
     }
 
-    public IEnumerator StartTimer()
+    public void StartTimer()
+    {
+        if (_timerCoroutine is not null)
+        {
+            StopCoroutine(_timerCoroutine);
+        }
+
+        _timerCoroutine = StartCoroutine(StartTimerCoroutine());
+    }
+
+    public void ResetCurrentTime()
     {
         CurrentTime = 0.0f;
+        IsTimerEnded = false;
+    }
+
+    private IEnumerator StartTimerCoroutine()
+    {
+        ResetCurrentTime();
         float timeLapse = 1.0f * TimeSpeed;
 
         while (CurrentTime < TargetTime)
@@ -27,10 +45,11 @@ public class Timer : MonoBehaviour
             yield return new WaitForSeconds(timeLapse);
             CurrentTime += timeLapse;
 
-            OnTimeChangeHandler();
+            OnTimerChangeHandler();
         }
 
         OnTimerEndHandler();
+        IsTimerEnded = true;
     }
 
     private void OnTimerEndHandler()
@@ -38,7 +57,7 @@ public class Timer : MonoBehaviour
         OnTimerEnded?.Invoke();
     }
 
-    private void OnTimeChangeHandler()
+    private void OnTimerChangeHandler()
     {
         OnTimerChanged?.Invoke();
     }

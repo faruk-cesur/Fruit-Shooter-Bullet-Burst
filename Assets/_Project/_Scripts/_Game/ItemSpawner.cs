@@ -10,14 +10,6 @@ public class ItemSpawner : MonoBehaviour
     [SerializeField] private Timer _itemSpawnTimer;
     [SerializeField] private ObjectPool _itemObjectPool;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            StartCoroutine(_itemSpawnTimer.StartTimer());
-        }
-    }
-    
     private void ResetSpawnTime()
     {
         _itemSpawnTimer.SetTimer(_itemSpawnerData.SpawnTime);
