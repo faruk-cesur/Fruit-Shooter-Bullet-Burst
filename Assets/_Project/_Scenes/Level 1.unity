@@ -357,6 +357,7 @@ Transform:
   - {fileID: 955361942}
   - {fileID: 704038089}
   - {fileID: 1147211724}
+  - {fileID: 1337320567}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -746,6 +747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36555d426b2e2d4429e67827ed8c59a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BulletsFromObjectPool: {fileID: 0}
   Pools: []
 --- !u!114 &704038088
 MonoBehaviour:
@@ -1053,6 +1055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36555d426b2e2d4429e67827ed8c59a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BulletsFromObjectPool: {fileID: 1337320567}
   Pools:
   - ObjectPrefab: {fileID: 2518334794803325682, guid: c68b7edc41e2e0f4b9afbbdc1164f562, type: 3}
     PoolSize: 20
@@ -1343,6 +1346,37 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!1 &1337320566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1337320567}
+  m_Layer: 0
+  m_Name: Bullets From Object Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1337320567
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337320566}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 404987816}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1894182107
 GameObject:
   m_ObjectHideFlags: 0

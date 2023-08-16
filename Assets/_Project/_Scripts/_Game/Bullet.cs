@@ -8,10 +8,14 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Rigidbody _bulletRigidbody;
     [SerializeField] private ParticleSystem _bulletParticle;
     [SerializeField] private PlayerData _playerData;
+    [SerializeField] private GameObject _bulletSmallModel;
+    private bool _isHide;
 
     private void OnEnable()
     {
         _bulletRigidbody.isKinematic = false;
+        _bulletSmallModel.SetActive(true);
+        _isHide = false;
     }
 
     private void OnDisable()
@@ -26,14 +30,21 @@ public class Bullet : MonoBehaviour
 
     private void MoveBulletForward()
     {
+        if (_isHide)
+            return;
+
         transform.Translate(Vector3.forward * (_bulletSpeed * Time.deltaTime), Space.Self);
     }
 
     private void PlayBulletParticle()
     {
         _bulletParticle.Play();
-        _bulletParticle.transform.SetParent(null);
-        Destroy(_bulletParticle.gameObject, 5);
+    }
+
+    private void HideBulletSmallModel()
+    {
+        _isHide = true;
+        _bulletSmallModel.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,5 +56,6 @@ public class Bullet : MonoBehaviour
         }
 
         PlayBulletParticle();
+        HideBulletSmallModel();
     }
 }

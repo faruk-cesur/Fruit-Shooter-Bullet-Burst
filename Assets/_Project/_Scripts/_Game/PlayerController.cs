@@ -82,12 +82,10 @@ public class PlayerController : MonoBehaviour
                 case TouchPhase.Moved:
                     UpdateAimPosition(touch);
                     _disableAimTimer.ResetCurrentTime();
-                    //StartCoroutine(SpawnBulletFromObjectPool());
                     break;
                 case TouchPhase.Stationary:
                     UpdateAimPosition(touch);
                     _disableAimTimer.ResetCurrentTime();
-                    //StartCoroutine(SpawnBulletFromObjectPool());
                     break;
                 case TouchPhase.Ended:
                     _mistouchTimer.StartTimer();
@@ -101,7 +99,6 @@ public class PlayerController : MonoBehaviour
                     ResetAimRotation();
                     SwitchPlayerState();
                     _disableAimTimer.ResetCurrentTime();
-                    ShootOnReleaseTouch();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -176,6 +173,7 @@ public class PlayerController : MonoBehaviour
         if (PlayerState == PlayerStates.Aiming)
         {
             Debug.LogError("Shoot");
+            StartCoroutine(SpawnBulletFromObjectPool());
         }
     }
 
@@ -227,12 +225,12 @@ public class PlayerController : MonoBehaviour
 
         ResetDurationBetweenBullets();
         var spawnedBullet = _bulletObjectPool.GetPooledObject(0);
-        //spawnedRandomBullet.transform.SetParent(null); // todo it gives null ref?!
+        spawnedBullet.transform.position = _bulletSpawnPosition.position;
+        spawnedBullet.transform.rotation = _bulletSpawnPosition.rotation;
 
         yield return new WaitForSeconds(2f);
 
         _bulletObjectPool.SetPooledObject(spawnedBullet, 0);
-        //spawnedRandomBullet.transform.SetParent(objectPool.transform); 
         spawnedBullet.transform.ResetLocalPos();
         spawnedBullet.transform.ResetLocalRot();
     }

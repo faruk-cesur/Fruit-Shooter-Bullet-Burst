@@ -12,6 +12,7 @@ public class ObjectPool : MonoBehaviour
         public int PoolSize;
     }
 
+    public Transform BulletsFromObjectPool;
     public Pool[] Pools = null;
 
     private void Awake()
@@ -21,7 +22,7 @@ public class ObjectPool : MonoBehaviour
             Pools[i].PooledObject = new Queue<GameObject>();
             for (int j = 0; j < Pools[i].PoolSize; j++)
             {
-                GameObject obj = Instantiate(Pools[i].ObjectPrefab);
+                GameObject obj = Instantiate(Pools[i].ObjectPrefab, BulletsFromObjectPool);
                 obj.SetActive(false);
                 Pools[i].PooledObject.Enqueue(obj);
             }
@@ -49,7 +50,7 @@ public class ObjectPool : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            GameObject obj = Instantiate(Pools[objectType].ObjectPrefab);
+            GameObject obj = Instantiate(Pools[objectType].ObjectPrefab, BulletsFromObjectPool);
             obj.SetActive(false);
             Pools[objectType].PooledObject.Enqueue(obj);
         }
