@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("SETUP")] private Timer _disableAimTimer;
     [SerializeField, BoxGroup("SETUP")] private Timer _mistouchTimer;
     [SerializeField, BoxGroup("SETUP")] private Transform _playerVisual;
+    [SerializeField, BoxGroup("SETUP")] private Transform _bulletSpawnPosition;
     [SerializeField, BoxGroup("SETUP")] private GameObject _stickmanRig;
     [SerializeField, BoxGroup("SETUP")] private GameObject _stickmanModel;
     [SerializeField, BoxGroup("SETUP")] private PlayerData _playerData;
