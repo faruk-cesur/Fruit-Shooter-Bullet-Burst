@@ -30,7 +30,7 @@ public class AudioManager : Singleton<AudioManager>
     {
         if (SettingsManager.Instance.IsSoundActivated)
         {
-            StartCoroutine(SetAudioCoroutine(audioClip, volume, waitBefore, isLoop));
         }
+            StartCoroutine(SetAudioCoroutine(audioClip, volume, waitBefore, isLoop));
     }
 }

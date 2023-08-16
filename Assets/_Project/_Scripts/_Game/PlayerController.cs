@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("SETUP")] private GameObject _stickmanRig;
     [SerializeField, BoxGroup("SETUP")] private GameObject _stickmanModel;
     [SerializeField, BoxGroup("SETUP")] private GameplayData _gameplayData;
+    [SerializeField, BoxGroup("SETUP")] private AudioClip _gunShootAudio;
+    [SerializeField, BoxGroup("SETUP")] private AudioClip _gunReloadAudio;
     private float _aimPositionX = 0f;
     private float _aimPositionY = 0f;
     private int _currentBulletAmount;
@@ -180,6 +182,7 @@ public class PlayerController : MonoBehaviour
         if (PlayerState == PlayerStates.Aiming && !IsCurrentBulletAmountZero)
         {
             StartCoroutine(SpawnBulletFromObjectPool());
+            AudioManager.Instance.PlayAudio(_gunShootAudio,1f,0,false);
         }
     }
 
@@ -243,6 +246,7 @@ public class PlayerController : MonoBehaviour
         _preventAimAfterReload = true;
         DisableAim();
         _stickmanAnimator.SetTrigger(Reloading);
+        AudioManager.Instance.PlayAudio(_gunReloadAudio,1f,0,false);
         yield return new WaitForSeconds(_gameplayData.GunReloadTime);
         _currentBulletAmount = _gameplayData.GunBulletAmount;
         StartCoroutine(ShootingStateCoroutine());

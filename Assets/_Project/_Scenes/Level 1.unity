@@ -1104,7 +1104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerState: 0
   _aimSensitivity: 10
-  _aimVerticalLimit: 25
+  _aimVerticalLimit: 45
   _aimHorizontalLimit: 45
   _stickmanAnimator: {fileID: 445070224}
   _aimUICanvas: {fileID: 1147211725}
@@ -1117,6 +1117,8 @@ MonoBehaviour:
   _stickmanRig: {fileID: 445070223}
   _stickmanModel: {fileID: 445070221}
   _gameplayData: {fileID: 11400000, guid: 63f12b0a0fa317c4689ec4ad7526b18c, type: 2}
+  _gunShootAudio: {fileID: 8300000, guid: e3f2f9c2ae69c8d449e7ef9871038520, type: 3}
+  _gunReloadAudio: {fileID: 8300000, guid: 3ea58d6c3c74e0d49bb6173930997c3a, type: 3}
 --- !u!114 &955361945
 MonoBehaviour:
   m_ObjectHideFlags: 0
