@@ -35,7 +35,7 @@ Transform:
   - {fileID: 3398629683376337777}
   - {fileID: 7397397939161727839}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4428333884610270635
 MonoBehaviour:
@@ -95,7 +95,8 @@ MonoBehaviour:
   _fruitExplosionParticle: {fileID: 3245877468866620272}
   _fruitHealth: {fileID: 4428333884610270635}
   _fruitRigidbody: {fileID: 6121428120679783651}
-  _fruitModel: {fileID: 3398629683375976273}
+  _fruitMeshRenderer: {fileID: 3398629683374043537}
+  IsImmune: 0
 --- !u!114 &-828187677345599880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,6 +301,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 9146529262736631945}
   m_SourcePrefab: {fileID: 100100000, guid: 08e8be4d091851748ae517a5b234e7a8, type: 3}
+--- !u!23 &3398629683374043537 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1007152147721809455, guid: 08e8be4d091851748ae517a5b234e7a8, type: 3}
+  m_PrefabInstance: {fileID: 2508580010342834110}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3398629683375976273 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1007152147719549167, guid: 08e8be4d091851748ae517a5b234e7a8, type: 3}

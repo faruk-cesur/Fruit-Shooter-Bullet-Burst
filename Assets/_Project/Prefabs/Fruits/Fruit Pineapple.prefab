@@ -35,7 +35,7 @@ Transform:
   - {fileID: 5568057460265001091}
   - {fileID: 157225841994931676}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1720461534964106284
 MonoBehaviour:
@@ -95,7 +95,8 @@ MonoBehaviour:
   _fruitExplosionParticle: {fileID: 3790082326208504113}
   _fruitHealth: {fileID: 1720461534964106284}
   _fruitRigidbody: {fileID: 1691144052489593677}
-  _fruitModel: {fileID: 5568057460264582307}
+  _fruitMeshRenderer: {fileID: 5568057460266771043}
+  IsImmune: 0
 --- !u!114 &9162423305062044620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,5 +327,10 @@ CapsuleCollider:
 --- !u!4 &5568057460265001091 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4252339125611552970, guid: 7584b38aa55d615428ade8b10bb3683a, type: 3}
+  m_PrefabInstance: {fileID: 8522746897207476297}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5568057460266771043 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4252339125613978154, guid: 7584b38aa55d615428ade8b10bb3683a, type: 3}
   m_PrefabInstance: {fileID: 8522746897207476297}
   m_PrefabAsset: {fileID: 0}

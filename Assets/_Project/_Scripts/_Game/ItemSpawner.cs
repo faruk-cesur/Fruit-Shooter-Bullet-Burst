@@ -44,14 +44,25 @@ public class ItemSpawner : MonoBehaviour
             GameObject prefab = _itemObjectPool.GetPooledObject(_randomIndex);
             prefab.transform.position = position;
             prefab.transform.rotation = rotation;
-            StartCoroutine(SetPooledObjectCoroutine(prefab, _randomIndex));
             yield return new WaitForSeconds(Random.Range(_minSpawnDelay, _maxSpawnDelay));
         }
     }
 
-    private IEnumerator SetPooledObjectCoroutine(GameObject pooledObject, int objectType)
+    private void OnTriggerEnter(Collider other)
     {
-        yield return new WaitForSeconds(5f);
-        _itemObjectPool.SetPooledObject(pooledObject, objectType);
+        if (other.transform.parent.TryGetComponent<Fruit>(out Fruit fruit))
+        {
+            if (fruit.IsImmune)
+                return;
+
+            for (var i = 0; i < _itemObjectPool.Pools.Length; i++)
+            {
+                var pool = _itemObjectPool.Pools[i];
+                if (pool.ObjectPrefab.name + "(Clone)" == other.transform.parent.name)
+                {
+                    _itemObjectPool.SetPooledObject(other.transform.parent.gameObject, i);
+                }
+            }
+        }
     }
 }

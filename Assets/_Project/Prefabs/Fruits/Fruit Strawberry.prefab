@@ -95,7 +95,8 @@ MonoBehaviour:
   _fruitExplosionParticle: {fileID: 4154087461677209431}
   _fruitHealth: {fileID: 1845093136906767012}
   _fruitRigidbody: {fileID: 7689532500416092696}
-  _fruitModel: {fileID: 899139394383640936}
+  _fruitMeshRenderer: {fileID: 2884242723933815796}
+  IsImmune: 0
 --- !u!114 &-9086241357179525352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,6 +249,11 @@ CapsuleCollider:
   m_Height: 0.17558165
   m_Direction: 1
   m_Center: {x: 0.000000007450581, y: 0.092585035, z: 0.000000007450581}
+--- !u!23 &2884242723933815796 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8441837198812092689, guid: 10bf3795c6cc61a49aa43b26597000dc, type: 3}
+  m_PrefabInstance: {fileID: 6710800282697800421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8963924191003785246 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2398110461511115515, guid: 10bf3795c6cc61a49aa43b26597000dc, type: 3}

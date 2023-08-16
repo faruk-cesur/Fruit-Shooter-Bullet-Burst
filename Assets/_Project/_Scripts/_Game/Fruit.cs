@@ -15,8 +15,9 @@ public class Fruit : MonoBehaviour, IShootable
     [SerializeField, BoxGroup("FRUIT SETUP")] private ParticleSystem _fruitExplosionParticle;
     [SerializeField, BoxGroup("FRUIT SETUP")] private Health _fruitHealth;
     [SerializeField, BoxGroup("FRUIT SETUP")] private Rigidbody _fruitRigidbody;
-    [SerializeField, BoxGroup("FRUIT SETUP")] private GameObject _fruitModel;
+    [SerializeField, BoxGroup("FRUIT SETUP")] private MeshRenderer _fruitMeshRenderer;
     private bool _isFruitGetShot;
+    public bool IsImmune;
 
     private void Start()
     {
@@ -25,6 +26,7 @@ public class Fruit : MonoBehaviour, IShootable
 
     private void OnEnable()
     {
+        StartCoroutine(SetImmune());
         _fruitRigidbody.isKinematic = false;
         FruitJump();
     }
@@ -67,7 +69,7 @@ public class Fruit : MonoBehaviour, IShootable
 
     private void SetFruitModelVisual(bool value)
     {
-        _fruitModel.SetActive(value);
+        _fruitMeshRenderer.enabled = value;
     }
 
     private void SetFruitExplosionParticle(bool value)
@@ -78,5 +80,12 @@ public class Fruit : MonoBehaviour, IShootable
     private void EarnMoneyOnShoot()
     {
         CurrencyManager.Instance.EarnMoney(_moneyReward);
+    }
+
+    private IEnumerator SetImmune()
+    {
+        IsImmune = true;
+        yield return new WaitForSeconds(1f);
+        IsImmune = false;
     }
 }

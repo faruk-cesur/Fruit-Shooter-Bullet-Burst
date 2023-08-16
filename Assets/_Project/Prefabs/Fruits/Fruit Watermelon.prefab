@@ -95,7 +95,8 @@ MonoBehaviour:
   _fruitExplosionParticle: {fileID: 2165395332204025430}
   _fruitHealth: {fileID: 5044944015301932758}
   _fruitRigidbody: {fileID: 6129096239235307164}
-  _fruitModel: {fileID: 7580888198152726532}
+  _fruitMeshRenderer: {fileID: 1026937131318425308}
+  IsImmune: 0
 --- !u!114 &3148737015091204009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,6 +182,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7493835108766857720}
   m_SourcePrefab: {fileID: 100100000, guid: 1be9a0069a70a7649884238d22e98db0, type: 3}
+--- !u!23 &1026937131318425308 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2620926414213587181, guid: 1be9a0069a70a7649884238d22e98db0, type: 3}
+  m_PrefabInstance: {fileID: 3035161504694867505}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2816596878573932943 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 939423553459619774, guid: 1be9a0069a70a7649884238d22e98db0, type: 3}
