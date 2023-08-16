@@ -12,8 +12,6 @@ public class Fruit : MonoBehaviour, IShootable
     [SerializeField, BoxGroup("FRUIT SETTINGS")] private int _moneyReward;
     [SerializeField, BoxGroup("FRUIT SETTINGS")] private float _minJumpForce;
     [SerializeField, BoxGroup("FRUIT SETTINGS")] private float _maxJumpForce;
-    [SerializeField, BoxGroup("FRUIT SETTINGS")] private float _minRotateAngle;
-    [SerializeField, BoxGroup("FRUIT SETTINGS")] private float _maxRotateAngle;
     [SerializeField, BoxGroup("FRUIT SETUP")] private ParticleSystem _fruitExplosionParticle;
     [SerializeField, BoxGroup("FRUIT SETUP")] private Health _fruitHealth;
     [SerializeField, BoxGroup("FRUIT SETUP")] private Rigidbody _fruitRigidbody;
@@ -37,13 +35,6 @@ public class Fruit : MonoBehaviour, IShootable
         _isFruitGetShot = false;
         SetFruitExplosionParticle(false);
         SetFruitModelVisual(true);
-        RandomFruitRotate();
-    }
-
-    private void RandomFruitRotate()
-    {
-        Quaternion rotation = Quaternion.Euler(0f, 0f, Random.Range(_minRotateAngle, _maxRotateAngle));
-        transform.localRotation = rotation;
     }
 
     private void FruitJump()

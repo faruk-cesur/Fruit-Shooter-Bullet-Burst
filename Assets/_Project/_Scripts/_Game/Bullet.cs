@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float _bulletSpeed;
     [SerializeField] private Rigidbody _bulletRigidbody;
     [SerializeField] private ParticleSystem _bulletParticle;
-    [SerializeField] private PlayerData _playerData;
+    [SerializeField] private GameplayData _gameplayData;
     [SerializeField] private GameObject _bulletSmallModel;
     private bool _isHide;
 
@@ -51,8 +51,7 @@ public class Bullet : MonoBehaviour
     {
         if (other.transform.parent.TryGetComponent<IShootable>(out IShootable shootable))
         {
-            // todo Damage the Shootable Enemy
-            shootable.GetShot(_playerData.GunDamage);
+            shootable.GetShot(_gameplayData.GunDamage);
         }
 
         PlayBulletParticle();

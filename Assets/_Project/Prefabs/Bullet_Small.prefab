@@ -50,10 +50,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a2fe2b7b65a17040bc1bb56bc301743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletSpeed: 20
+  _bulletSpeed: 40
   _bulletRigidbody: {fileID: 3461757730644037018}
   _bulletParticle: {fileID: 8689258248799957050}
-  _playerData: {fileID: 11400000, guid: 109c2b6c666bab14595a9ce84642f739, type: 2}
+  _gameplayData: {fileID: 11400000, guid: 63f12b0a0fa317c4689ec4ad7526b18c, type: 2}
   _bulletSmallModel: {fileID: 4243833726530787452}
 --- !u!54 &3461757730644037018
 Rigidbody:

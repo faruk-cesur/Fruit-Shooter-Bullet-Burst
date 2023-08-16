@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("SETUP")] private Transform _bulletSpawnPosition;
     [SerializeField, BoxGroup("SETUP")] private GameObject _stickmanRig;
     [SerializeField, BoxGroup("SETUP")] private GameObject _stickmanModel;
-    [SerializeField, BoxGroup("SETUP")] private PlayerData _playerData;
+    [SerializeField, BoxGroup("SETUP")] private GameplayData _gameplayData;
     private float _aimPositionX = 0f;
     private float _aimPositionY = 0f;
     private int _currentBulletAmount;
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _disableAimTimer.OnTimerEnded += DisableAim;
-        _currentBulletAmount = _playerData.GunBulletAmount;
+        _currentBulletAmount = _gameplayData.GunBulletAmount;
     }
 
     private void Update()
@@ -243,8 +243,8 @@ public class PlayerController : MonoBehaviour
         _preventAimAfterReload = true;
         DisableAim();
         _stickmanAnimator.SetTrigger(Reloading);
-        yield return new WaitForSeconds(_playerData.GunReloadTime);
-        _currentBulletAmount = _playerData.GunBulletAmount;
+        yield return new WaitForSeconds(_gameplayData.GunReloadTime);
+        _currentBulletAmount = _gameplayData.GunBulletAmount;
         StartCoroutine(ShootingStateCoroutine());
     }
 }
