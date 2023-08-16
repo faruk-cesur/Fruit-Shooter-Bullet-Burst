@@ -200,21 +200,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bullet Trail Particle 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1754866473293291859, guid: 53a9b306ba2bcf44dbe297492cb58c68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1754866473293524869, guid: 53a9b306ba2bcf44dbe297492cb58c68, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1754866473293524869, guid: 53a9b306ba2bcf44dbe297492cb58c68, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 1754866473293524869, guid: 53a9b306ba2bcf44dbe297492cb58c68, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 1754866473293524869, guid: 53a9b306ba2bcf44dbe297492cb58c68, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 1754866473293524869, guid: 53a9b306ba2bcf44dbe297492cb58c68, type: 3}
       propertyPath: m_LocalPosition.x
@@ -259,6 +263,18 @@ PrefabInstance:
     - target: {fileID: 1754866473293524869, guid: 53a9b306ba2bcf44dbe297492cb58c68, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754866473308694559, guid: 53a9b306ba2bcf44dbe297492cb58c68, type: 3}
+      propertyPath: emitterVelocityMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754866473308755595, guid: 53a9b306ba2bcf44dbe297492cb58c68, type: 3}
+      propertyPath: emitterVelocityMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754866473308774829, guid: 53a9b306ba2bcf44dbe297492cb58c68, type: 3}
+      propertyPath: emitterVelocityMode
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -365,6 +381,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2395586525677525127}
     m_Modifications:
+    - target: {fileID: 3613586985518927340, guid: 68b87768c8a638d488178e5d2cab73ab, type: 3}
+      propertyPath: emitterVelocityMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3613586985518934564, guid: 68b87768c8a638d488178e5d2cab73ab, type: 3}
+      propertyPath: emitterVelocityMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3613586985518962100, guid: 68b87768c8a638d488178e5d2cab73ab, type: 3}
+      propertyPath: emitterVelocityMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3613586985538100594, guid: 68b87768c8a638d488178e5d2cab73ab, type: 3}
       propertyPath: m_Name
       value: Bullet Trail Particle 2
@@ -375,15 +403,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3613586985538342442, guid: 68b87768c8a638d488178e5d2cab73ab, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 3613586985538342442, guid: 68b87768c8a638d488178e5d2cab73ab, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 3613586985538342442, guid: 68b87768c8a638d488178e5d2cab73ab, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 3613586985538342442, guid: 68b87768c8a638d488178e5d2cab73ab, type: 3}
       propertyPath: m_LocalPosition.x

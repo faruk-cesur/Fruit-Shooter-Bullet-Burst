@@ -1,24 +1,55 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(Health), typeof(Rigidbody))]
 public class Fruit : MonoBehaviour, IShootable
 {
-    [SerializeField, BoxGroup("Fruit Settings")] private int _moneyReward;
-    [SerializeField, BoxGroup("Fruit Setup")] private ParticleSystem _fruitBlastParticle;
-    [SerializeField, BoxGroup("Fruit Setup")] private Health _fruitHealth;
+    [SerializeField, BoxGroup("FRUIT SETTINGS")] private int _moneyReward;
+    [SerializeField, BoxGroup("FRUIT SETTINGS")] private float _minJumpForce;
+    [SerializeField, BoxGroup("FRUIT SETTINGS")] private float _maxJumpForce;
+    [SerializeField, BoxGroup("FRUIT SETTINGS")] private float _minRotateAngle;
+    [SerializeField, BoxGroup("FRUIT SETTINGS")] private float _maxRotateAngle;
+    [SerializeField, BoxGroup("FRUIT SETUP")] private ParticleSystem _fruitExplosionParticle;
+    [SerializeField, BoxGroup("FRUIT SETUP")] private Health _fruitHealth;
+    [SerializeField, BoxGroup("FRUIT SETUP")] private Rigidbody _fruitRigidbody;
+    [SerializeField, BoxGroup("FRUIT SETUP")] private GameObject _fruitModel;
     private bool _isFruitGetShot;
 
     private void Start()
     {
-        _fruitHealth.OnDeath += OnFruitBlast;
+        _fruitHealth.OnDeath += OnFruitExplosion;
     }
 
-    private void OnDestroy()
+    private void OnEnable()
     {
-        _fruitHealth.OnDeath -= OnFruitBlast;
+        _fruitRigidbody.isKinematic = false;
+        FruitJump();
+    }
+
+    private void OnDisable()
+    {
+        _fruitRigidbody.isKinematic = true;
+        _isFruitGetShot = false;
+        SetFruitExplosionParticle(false);
+        SetFruitModelVisual(true);
+        RandomFruitRotate();
+    }
+
+    private void RandomFruitRotate()
+    {
+        Quaternion rotation = Quaternion.Euler(0f, 0f, Random.Range(_minRotateAngle, _maxRotateAngle));
+        transform.localRotation = rotation;
+    }
+
+    private void FruitJump()
+    {
+        float force = Random.Range(_minJumpForce, _maxJumpForce);
+        _fruitRigidbody.AddForce(transform.up * force, ForceMode.Impulse);
     }
 
     public void GetShot(float gunDamage)
@@ -36,18 +67,21 @@ public class Fruit : MonoBehaviour, IShootable
         _fruitHealth.Damage(gunDamage);
     }
 
-    private void OnFruitBlast()
+    private void OnFruitExplosion()
     {
-        PlayFruitBlastParticle();
         EarnMoneyOnShoot();
-        Destroy(gameObject);
+        SetFruitExplosionParticle(true);
+        SetFruitModelVisual(false);
     }
 
-    private void PlayFruitBlastParticle()
+    private void SetFruitModelVisual(bool value)
     {
-        _fruitBlastParticle.transform.SetParent(null);
-        _fruitBlastParticle.Play();
-        Destroy(_fruitBlastParticle.gameObject, 5f);
+        _fruitModel.SetActive(value);
+    }
+
+    private void SetFruitExplosionParticle(bool value)
+    {
+        _fruitExplosionParticle.gameObject.SetActive(value);
     }
 
     private void EarnMoneyOnShoot()

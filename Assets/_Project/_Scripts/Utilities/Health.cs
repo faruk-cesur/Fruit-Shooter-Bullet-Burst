@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-    public float StartingHealth { get; set; }
+    [field: SerializeField] public float StartingHealth { get; set; }
     public UnityAction OnDeath;
 
     public bool IsDead { get; set; }
