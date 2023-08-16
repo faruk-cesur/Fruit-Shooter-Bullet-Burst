@@ -973,7 +973,6 @@ GameObject:
   - component: {fileID: 955361942}
   - component: {fileID: 955361944}
   - component: {fileID: 955361945}
-  - component: {fileID: 955361943}
   - component: {fileID: 955361946}
   - component: {fileID: 955361947}
   m_Layer: 0
@@ -999,22 +998,6 @@ Transform:
   m_Father: {fileID: 404987816}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &955361943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 955361941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b20b4f94e0e3d8468d10575a4038995, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <TimerName>k__BackingField: Gun Reload Timer
-  <TargetTime>k__BackingField: 5
-  <CurrentTime>k__BackingField: 0
-  <IsTimerEnded>k__BackingField: 0
 --- !u!114 &955361944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1035,7 +1018,6 @@ MonoBehaviour:
   _aimUICanvas: {fileID: 1147211725}
   _cameraController: {fileID: 471171560}
   _bulletObjectPool: {fileID: 955361945}
-  _gunReloadTimer: {fileID: 955361943}
   _disableAimTimer: {fileID: 955361946}
   _mistouchTimer: {fileID: 955361947}
   _playerVisual: {fileID: 572879864}

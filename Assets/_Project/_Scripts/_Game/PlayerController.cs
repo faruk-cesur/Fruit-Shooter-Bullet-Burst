@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("SETUP")] private CanvasGroup _aimUICanvas;
     [SerializeField, BoxGroup("SETUP")] private CameraController _cameraController;
     [SerializeField, BoxGroup("SETUP")] private ObjectPool _bulletObjectPool;
-    [SerializeField, BoxGroup("SETUP")] private Timer _gunReloadTimer;
     [SerializeField, BoxGroup("SETUP")] private Timer _disableAimTimer;
     [SerializeField, BoxGroup("SETUP")] private Timer _mistouchTimer;
     [SerializeField, BoxGroup("SETUP")] private Transform _playerVisual;
@@ -35,13 +34,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("SETUP")] private PlayerData _playerData;
     private float _aimPositionX = 0f;
     private float _aimPositionY = 0f;
+    private int _currentBulletAmount;
+    private bool _preventAimAfterReload;
     private Tween _aimUICanvasTween;
     private static readonly int Shooting = Animator.StringToHash("Shooting");
     private static readonly int Idle = Animator.StringToHash("Idle");
+    private static readonly int Reloading = Animator.StringToHash("Reloading");
 
     private void Start()
     {
-        _disableAimTimer.OnTimerEnded += OnDisableAimTimerEnded;
+        _disableAimTimer.OnTimerEnded += DisableAim;
+        _currentBulletAmount = _playerData.GunBulletAmount;
     }
 
     private void Update()
@@ -70,38 +73,41 @@ public class PlayerController : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
 
-            switch (touch.phase)
+            if (!_preventAimAfterReload)
             {
-                case TouchPhase.Began:
-                    if (_mistouchTimer.IsTimerEnded)
-                    {
-                        SwitchPlayerState();
-                    }
+                switch (touch.phase)
+                {
+                    case TouchPhase.Began:
+                        if (_mistouchTimer.IsTimerEnded)
+                        {
+                            SwitchPlayerState();
+                        }
 
-                    break;
-                case TouchPhase.Moved:
-                    UpdateAimPosition(touch);
-                    _disableAimTimer.ResetCurrentTime();
-                    break;
-                case TouchPhase.Stationary:
-                    UpdateAimPosition(touch);
-                    _disableAimTimer.ResetCurrentTime();
-                    break;
-                case TouchPhase.Ended:
-                    _mistouchTimer.StartTimer();
-                    ResetAimRotation();
-                    SwitchPlayerState();
-                    _disableAimTimer.ResetCurrentTime();
-                    ShootOnReleaseTouch();
-                    break;
-                case TouchPhase.Canceled:
-                    _mistouchTimer.StartTimer();
-                    ResetAimRotation();
-                    SwitchPlayerState();
-                    _disableAimTimer.ResetCurrentTime();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                        break;
+                    case TouchPhase.Moved:
+                        UpdateAimPosition(touch);
+                        _disableAimTimer.ResetCurrentTime();
+                        break;
+                    case TouchPhase.Stationary:
+                        UpdateAimPosition(touch);
+                        _disableAimTimer.ResetCurrentTime();
+                        break;
+                    case TouchPhase.Ended:
+                        _mistouchTimer.StartTimer();
+                        ResetAimRotation();
+                        SwitchPlayerState();
+                        _disableAimTimer.ResetCurrentTime();
+                        ShootOnReleaseTouch();
+                        break;
+                    case TouchPhase.Canceled:
+                        _mistouchTimer.StartTimer();
+                        ResetAimRotation();
+                        SwitchPlayerState();
+                        _disableAimTimer.ResetCurrentTime();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
         }
 
@@ -127,7 +133,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnDisableAimTimerEnded()
+    private void DisableAim()
     {
         StartCoroutine(IdleStateCoroutine());
         ResetAimRotation();
@@ -142,7 +148,7 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitUntil(() => _cameraController.IsCameraBlendCompleted);
 
-        if (PlayerState == PlayerStates.Idle)
+        if (PlayerState == PlayerStates.Idle && !IsCurrentBulletAmountZero)
         {
             _stickmanAnimator.SetTrigger(Idle);
         }
@@ -150,7 +156,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator ShootingStateCoroutine()
     {
-        if (!_mistouchTimer.IsTimerEnded)
+        if (!_mistouchTimer.IsTimerEnded || IsCurrentBulletAmountZero)
             yield break;
 
         PlayerState = PlayerStates.Shooting;
@@ -165,14 +171,14 @@ public class PlayerController : MonoBehaviour
             _disableAimTimer.StartTimer();
             SetStickmanVisual(false);
             SetAimUICanvas(1f, 0.25f);
+            _preventAimAfterReload = false;
         }
     }
 
     private void ShootOnReleaseTouch()
     {
-        if (PlayerState == PlayerStates.Aiming)
+        if (PlayerState == PlayerStates.Aiming && !IsCurrentBulletAmountZero)
         {
-            Debug.LogError("Shoot");
             StartCoroutine(SpawnBulletFromObjectPool());
         }
     }
@@ -211,19 +217,14 @@ public class PlayerController : MonoBehaviour
         _stickmanRig.SetActive(value);
     }
 
-    private void ResetDurationBetweenBullets()
-    {
-        _gunReloadTimer.SetTimer(_playerData.GunReloadTime);
-    }
-
     private IEnumerator SpawnBulletFromObjectPool()
     {
-        while (_gunReloadTimer.CurrentTime > 0)
+        _currentBulletAmount--;
+        if (IsCurrentBulletAmountZero)
         {
-            yield break;
+            StartCoroutine(ReloadGunBullets());
         }
 
-        ResetDurationBetweenBullets();
         var spawnedBullet = _bulletObjectPool.GetPooledObject(0);
         spawnedBullet.transform.position = _bulletSpawnPosition.position;
         spawnedBullet.transform.rotation = _bulletSpawnPosition.rotation;
@@ -233,5 +234,17 @@ public class PlayerController : MonoBehaviour
         _bulletObjectPool.SetPooledObject(spawnedBullet, 0);
         spawnedBullet.transform.ResetLocalPos();
         spawnedBullet.transform.ResetLocalRot();
+    }
+
+    private bool IsCurrentBulletAmountZero => _currentBulletAmount <= 0;
+
+    private IEnumerator ReloadGunBullets()
+    {
+        _preventAimAfterReload = true;
+        DisableAim();
+        _stickmanAnimator.SetTrigger(Reloading);
+        yield return new WaitForSeconds(_playerData.GunReloadTime);
+        _currentBulletAmount = _playerData.GunBulletAmount;
+        StartCoroutine(ShootingStateCoroutine());
     }
 }

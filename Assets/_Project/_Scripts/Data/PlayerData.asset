@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   <GunDamage>k__BackingField: 100
+  <GunReloadTime>k__BackingField: 3.3
+  <GunBulletAmount>k__BackingField: 10
