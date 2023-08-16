@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("SETUP")] private GameplayData _gameplayData;
     [SerializeField, BoxGroup("SETUP")] private AudioClip _gunShootAudio;
     [SerializeField, BoxGroup("SETUP")] private AudioClip _gunReloadAudio;
+    [SerializeField, BoxGroup("SETUP")] private TextMeshProUGUI _bulletAmountText;
     private float _aimPositionX = 0f;
     private float _aimPositionY = 0f;
     private int _currentBulletAmount;
@@ -182,7 +184,7 @@ public class PlayerController : MonoBehaviour
         if (PlayerState == PlayerStates.Aiming && !IsCurrentBulletAmountZero)
         {
             StartCoroutine(SpawnBulletFromObjectPool());
-            AudioManager.Instance.PlayAudio(_gunShootAudio,1f,0,false);
+            AudioManager.Instance.PlayAudio(_gunShootAudio, 1f, 0, false);
         }
     }
 
@@ -223,6 +225,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator SpawnBulletFromObjectPool()
     {
         _currentBulletAmount--;
+        _bulletAmountText.text = "x" + _currentBulletAmount;
         if (IsCurrentBulletAmountZero)
         {
             StartCoroutine(ReloadGunBullets());
@@ -246,9 +249,10 @@ public class PlayerController : MonoBehaviour
         _preventAimAfterReload = true;
         DisableAim();
         _stickmanAnimator.SetTrigger(Reloading);
-        AudioManager.Instance.PlayAudio(_gunReloadAudio,1f,0,false);
+        AudioManager.Instance.PlayAudio(_gunReloadAudio, 1f, 0, false);
         yield return new WaitForSeconds(_gameplayData.GunReloadTime);
         _currentBulletAmount = _gameplayData.GunBulletAmount;
+        _bulletAmountText.text = "x" + _currentBulletAmount;
         StartCoroutine(ShootingStateCoroutine());
     }
 }
