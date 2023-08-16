@@ -18,9 +18,13 @@ public class PlayerController : MonoBehaviour
         Win
     }
 
-    [SerializeField, BoxGroup("SETTINGS")] private float _aimSensitivity = 0.3f;
-    [SerializeField, BoxGroup("SETTINGS")] private float _aimVerticalLimit = 25f;
-    [SerializeField, BoxGroup("SETTINGS")] private float _aimHorizontalLimit = 45f;
+    [SerializeField, BoxGroup("Aim Control")] private float _aimSensitivity = 0.3f;
+    [SerializeField, BoxGroup("Aim Control")] private float _aimVerticalLimit = 45f;
+    [SerializeField, BoxGroup("Aim Control")] private float _aimHorizontalLimit = 45f;
+    [SerializeField, BoxGroup("Aim Shake")] private float _aimShakeDuration;
+    [SerializeField, BoxGroup("Aim Shake")] private float _aimShakePower;
+    [SerializeField, BoxGroup("Aim Shake")] private int _aimShakeVibrato;
+    [SerializeField, BoxGroup("Aim Shake")] private float _aimShakeRandomness;
 
     [SerializeField, BoxGroup("SETUP")] private Animator _stickmanAnimator;
     [SerializeField, BoxGroup("SETUP")] private CanvasGroup _aimUICanvas;
@@ -30,6 +34,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("SETUP")] private Timer _mistouchTimer;
     [SerializeField, BoxGroup("SETUP")] private Transform _playerVisual;
     [SerializeField, BoxGroup("SETUP")] private Transform _bulletSpawnPosition;
+    [SerializeField, BoxGroup("SETUP")] private Transform _shootingCamera;
     [SerializeField, BoxGroup("SETUP")] private GameObject _stickmanRig;
     [SerializeField, BoxGroup("SETUP")] private GameObject _stickmanModel;
     [SerializeField, BoxGroup("SETUP")] private GameplayData _gameplayData;
@@ -185,6 +190,7 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(SpawnBulletFromObjectPool());
             AudioManager.Instance.PlayAudio(_gunShootAudio, 1f, 0, false);
+            _shootingCamera.DOShakeRotation(_aimShakeDuration, _aimShakePower, _aimShakeVibrato, _aimShakeRandomness);
         }
     }
 

@@ -29,6 +29,7 @@ public class ItemSpawner : MonoBehaviour
 
     private IEnumerator SpawnItem()
     {
+        yield return new WaitUntil(() => GameManager.Instance.CurrentGameState == GameState.Gameplay);
         yield return new WaitForSeconds(2f);
 
         while (enabled)

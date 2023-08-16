@@ -1106,6 +1106,10 @@ MonoBehaviour:
   _aimSensitivity: 10
   _aimVerticalLimit: 45
   _aimHorizontalLimit: 45
+  _aimShakeDuration: 0.2
+  _aimShakePower: 10
+  _aimShakeVibrato: 0
+  _aimShakeRandomness: 0
   _stickmanAnimator: {fileID: 445070224}
   _aimUICanvas: {fileID: 1147211725}
   _cameraController: {fileID: 471171560}
@@ -1114,6 +1118,7 @@ MonoBehaviour:
   _mistouchTimer: {fileID: 955361947}
   _playerVisual: {fileID: 572879864}
   _bulletSpawnPosition: {fileID: 750133849}
+  _shootingCamera: {fileID: 680950355}
   _stickmanRig: {fileID: 445070223}
   _stickmanModel: {fileID: 445070221}
   _gameplayData: {fileID: 11400000, guid: 63f12b0a0fa317c4689ec4ad7526b18c, type: 2}
