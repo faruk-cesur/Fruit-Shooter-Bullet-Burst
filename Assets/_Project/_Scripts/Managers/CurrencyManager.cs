@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,6 +9,7 @@ public class CurrencyManager : Singleton<CurrencyManager>
 
     [field: SerializeField, BoxGroup("CURRENCY DATA")] public CurrencyData GetCurrencyData { get; private set; }
 
+    [SerializeField] private Transform _moneyBackground;
     public UnityAction OnMoneyChanged;
 
     #endregion
@@ -21,6 +23,7 @@ public class CurrencyManager : Singleton<CurrencyManager>
         GetCurrencyData.Money += money;
         SaveCurrency();
         UIManager.Instance.PrintTotalMoneyText();
+        _moneyBackground.DOShakeScale(0.25f, 0.25f);
         OnMoneyChanged?.Invoke();
     }
 
