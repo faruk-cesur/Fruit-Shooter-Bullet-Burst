@@ -81,7 +81,7 @@ public class SettingsManager : Singleton<SettingsManager>
 
         if (!PlayerPrefs.HasKey("AimSensitivity"))
         {
-            AimSensitivitySlider.value = 10f;
+            AimSensitivitySlider.value = 7f;
             _gameplayData.AimSensitivity = AimSensitivitySlider.value;
         }
         else
@@ -92,7 +92,7 @@ public class SettingsManager : Singleton<SettingsManager>
 
         if (!PlayerPrefs.HasKey("AimShakeStrength"))
         {
-            GunRecoilSlider.value = 10f;
+            GunRecoilSlider.value = 5f;
             _gameplayData.AimShakeStrength = GunRecoilSlider.value;
         }
         else

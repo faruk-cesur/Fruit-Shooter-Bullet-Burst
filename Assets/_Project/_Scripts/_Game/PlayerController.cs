@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField, BoxGroup("Aim Control")] private float _aimVerticalLimit = 45f;
     [SerializeField, BoxGroup("Aim Control")] private float _aimHorizontalLimit = 45f;
+    [SerializeField, BoxGroup("Targeted Fruit Amount")] private int _targetedFruitAmount;
+    [SerializeField, BoxGroup("Targeted Fruit Amount"), ReadOnly] private int _currentFruitAmount;
 
     [SerializeField, BoxGroup("SETUP")] private GameplayData _gameplayData;
     [SerializeField, BoxGroup("SETUP")] private Animator _stickmanAnimator;
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("SETUP")] private AudioClip _gunShootAudio;
     [SerializeField, BoxGroup("SETUP")] private AudioClip _gunReloadAudio;
     [SerializeField, BoxGroup("SETUP")] private TextMeshProUGUI _bulletAmountText;
+    [SerializeField, BoxGroup("SETUP")] private TextMeshProUGUI _targetedFruitAmountText;
     private float _aimPositionX = 0f;
     private float _aimPositionY = 0f;
     private int _currentBulletAmount;
@@ -49,12 +52,15 @@ public class PlayerController : MonoBehaviour
     {
         _disableAimTimer.OnTimerEnded += DisableAim;
         SettingsManager.Instance.OnSaveSettings += ReloadBulletAmount;
+        CurrencyManager.Instance.OnMoneyChanged += SetTargetedFruitAmountText;
+        _targetedFruitAmountText.text = _currentFruitAmount + "/" + _targetedFruitAmount;
         ReloadBulletAmount();
     }
 
     private void OnDestroy()
     {
         SettingsManager.Instance.OnSaveSettings -= ReloadBulletAmount;
+        CurrencyManager.Instance.OnMoneyChanged -= SetTargetedFruitAmountText;
     }
 
     private void Update()
@@ -291,5 +297,19 @@ public class PlayerController : MonoBehaviour
         _bulletObjectPool.SetPooledObject(spawnedBullet, 0);
         spawnedBullet.transform.ResetLocalPos();
         spawnedBullet.transform.ResetLocalRot();
+    }
+
+    private void SetTargetedFruitAmountText()
+    {
+        if (GameManager.Instance.CurrentGameState == GameState.Gameplay)
+        {
+            _currentFruitAmount++;
+            _targetedFruitAmountText.text = _currentFruitAmount + "/" + _targetedFruitAmount;
+        }
+
+        if (_currentFruitAmount >= _targetedFruitAmount)
+        {
+            GameManager.Instance.Win(100);
+        }
     }
 }
