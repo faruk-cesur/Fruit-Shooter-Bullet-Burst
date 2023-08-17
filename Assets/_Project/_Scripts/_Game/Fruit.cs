@@ -29,7 +29,7 @@ public class Fruit : MonoBehaviour, IShootable
         StartCoroutine(SetImmuneForSpawnerCollider());
         _fruitRigidbody.isKinematic = false;
         _isFruitGetShot = false;
-        FruitJump();
+        StartCoroutine(FruitJump());
     }
 
     private void OnDisable()
@@ -40,8 +40,9 @@ public class Fruit : MonoBehaviour, IShootable
         SetFruitModelVisual(true);
     }
 
-    private void FruitJump()
+    private IEnumerator FruitJump()
     {
+        yield return new WaitForSeconds(0.5f);
         float force = Random.Range(_minJumpForce, _maxJumpForce);
         _fruitRigidbody.AddForce(transform.up * force, ForceMode.Impulse);
     }

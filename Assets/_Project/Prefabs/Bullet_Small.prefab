@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a2fe2b7b65a17040bc1bb56bc301743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletSpeed: 40
+  _bulletSpeed: 50
   _bulletRigidbody: {fileID: 3461757730644037018}
   _bulletParticle: {fileID: 8689258248799957050}
   _gameplayData: {fileID: 11400000, guid: 63f12b0a0fa317c4689ec4ad7526b18c, type: 2}

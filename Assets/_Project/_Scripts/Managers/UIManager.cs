@@ -18,6 +18,7 @@ public class UIManager : Singleton<UIManager>
     [BoxGroup("TEXT SETUP"), SerializeField] private TextMeshProUGUI _totalMoneyText;
     [BoxGroup("TEXT SETUP"), SerializeField] public TextMeshProUGUI EarnedMoneyTextOnWin;
     [BoxGroup("TEXT SETUP"), SerializeField] public TextMeshProUGUI EarnedMoneyTextOnLose;
+    [BoxGroup("TEXT SETUP"), SerializeField] public TextMeshProUGUI CountDownText;
 
     [BoxGroup("GAMEPLAY UI SETUP"), SerializeField] private CanvasGroup _levelTextCanvasGroup;
     [BoxGroup("GAMEPLAY UI SETUP"), SerializeField] private CanvasGroup _moneyBackgroundCanvasGroup;

@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("SETUP")] private AudioClip _gunReloadAudio;
     [SerializeField, BoxGroup("SETUP")] private TextMeshProUGUI _bulletAmountText;
     [SerializeField, BoxGroup("SETUP")] private TextMeshProUGUI _targetedFruitAmountText;
+    [SerializeField, BoxGroup("SETUP")] private CountDown _countDown;
     private float _aimPositionX = 0f;
     private float _aimPositionY = 0f;
     private int _currentBulletAmount;
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour
     private static readonly int Shooting = Animator.StringToHash("Shooting");
     private static readonly int Idle = Animator.StringToHash("Idle");
     private static readonly int Reloading = Animator.StringToHash("Reloading");
+    private static readonly int Win = Animator.StringToHash("Win");
 
     private void Start()
     {
@@ -302,7 +304,8 @@ public class PlayerController : MonoBehaviour
 
     private void SetStartingTargetedFruitAmount()
     {
-        _targetedFruitAmount = Random.Range(10, 101);
+        _targetedFruitAmount = Random.Range(10, 111);
+        _countDown.TotalTime = _targetedFruitAmount * 4f;
         _targetedFruitAmountText.text = _currentFruitAmount + "/" + _targetedFruitAmount;
     }
     private void SetTargetedFruitAmountText()
@@ -316,6 +319,10 @@ public class PlayerController : MonoBehaviour
         if (_currentFruitAmount >= _targetedFruitAmount)
         {
             GameManager.Instance.Win(100);
+            PlayerState = PlayerStates.Win;
+            _stickmanAnimator.SetTrigger(Win);
+            ResetAimRotation();
+            _playerVisual.DOLocalRotate(Vector3.zero, 0.5f);
         }
     }
 }
