@@ -136,7 +136,7 @@ public class SettingsManager : Singleton<SettingsManager>
         SoundOffButton.SetActive(false);
         IsSoundActivated = true;
         PlayerPrefs.SetInt("SoundSettings", 1);
-        AudioManager.Instance.Listener.enabled = true;
+        AudioListener.pause = false;
     }
 
     public void DisableSound()
@@ -145,7 +145,7 @@ public class SettingsManager : Singleton<SettingsManager>
         SoundOffButton.SetActive(true);
         IsSoundActivated = false;
         PlayerPrefs.SetInt("SoundSettings", 0);
-        AudioManager.Instance.Listener.enabled = false;
+        AudioListener.pause = true;
     }
 
     public void EnableVibration(bool playAudio)

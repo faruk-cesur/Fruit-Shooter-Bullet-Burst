@@ -5,7 +5,6 @@ using UnityEngine;
 public class AudioManager : Singleton<AudioManager>
 {
     public AudioSource MainAudioSource;
-    public AudioListener Listener;
 
     private IEnumerator SetAudioCoroutine(AudioClip audioClip, float volume, float timeBeforePlaying, bool isAudioClipLoop)
     {
