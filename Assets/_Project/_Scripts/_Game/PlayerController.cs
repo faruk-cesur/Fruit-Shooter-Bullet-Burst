@@ -5,6 +5,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
@@ -53,7 +54,7 @@ public class PlayerController : MonoBehaviour
         _disableAimTimer.OnTimerEnded += DisableAim;
         SettingsManager.Instance.OnSaveSettings += ReloadBulletAmount;
         CurrencyManager.Instance.OnMoneyChanged += SetTargetedFruitAmountText;
-        _targetedFruitAmountText.text = _currentFruitAmount + "/" + _targetedFruitAmount;
+        SetStartingTargetedFruitAmount();
         ReloadBulletAmount();
     }
 
@@ -299,6 +300,11 @@ public class PlayerController : MonoBehaviour
         spawnedBullet.transform.ResetLocalRot();
     }
 
+    private void SetStartingTargetedFruitAmount()
+    {
+        _targetedFruitAmount = Random.Range(10, 101);
+        _targetedFruitAmountText.text = _currentFruitAmount + "/" + _targetedFruitAmount;
+    }
     private void SetTargetedFruitAmountText()
     {
         if (GameManager.Instance.CurrentGameState == GameState.Gameplay)
