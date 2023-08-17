@@ -192,8 +192,13 @@ public class PlayerController : MonoBehaviour
         if (PlayerState == PlayerStates.Aiming && !IsCurrentBulletAmountZero && _gameplayData.GodMode <= 0)
         {
             StartCoroutine(SpawnBulletFromObjectPool());
-            AudioManager.Instance.PlayAudio(_gunShootAudio, 1f, 0, false);
             _shootingCamera.DOShakeRotation(_gameplayData.AimShakeDuration, _gameplayData.AimShakeStrength, _gameplayData.AimShakeVibrato, _gameplayData.AimShakeRandomness);
+            AudioManager.Instance.PlayAudio(_gunShootAudio, 1f, 0, false);
+
+            if (SettingsManager.Instance.IsVibrationActivated)
+            {
+                Vibration.Vibrate();
+            }
         }
     }
 
@@ -274,7 +279,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_gameplayData.GodMode <= 0)
             yield break;
-        
+
         _bulletAmountText.text = "GOD MODE";
 
         var spawnedBullet = _bulletObjectPool.GetPooledObject(0);
