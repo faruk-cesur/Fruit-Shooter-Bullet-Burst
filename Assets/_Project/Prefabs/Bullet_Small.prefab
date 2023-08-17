@@ -146,6 +146,10 @@ PrefabInstance:
       value: Bullet_Small
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c61bed4ef189f2f489003b8054818517, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c61bed4ef189f2f489003b8054818517, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}

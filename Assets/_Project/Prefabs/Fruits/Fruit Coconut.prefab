@@ -90,8 +90,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moneyReward: 10
-  _minJumpForce: 10
-  _maxJumpForce: 13
+  _minJumpForce: 13
+  _maxJumpForce: 16
   _fruitExplosionParticle: {fileID: 872761249522336387}
   _fruitHealth: {fileID: 7281365903168478063}
   _fruitRigidbody: {fileID: 8046156089206235026}
@@ -312,7 +312,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8776045512534562437}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 0767f15995f79d5429c1b757ece66865, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

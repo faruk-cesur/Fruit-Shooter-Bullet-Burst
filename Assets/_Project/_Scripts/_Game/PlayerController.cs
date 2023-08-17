@@ -18,14 +18,10 @@ public class PlayerController : MonoBehaviour
         Win
     }
 
-    [SerializeField, BoxGroup("Aim Control")] private float _aimSensitivity = 0.3f;
     [SerializeField, BoxGroup("Aim Control")] private float _aimVerticalLimit = 45f;
     [SerializeField, BoxGroup("Aim Control")] private float _aimHorizontalLimit = 45f;
-    [SerializeField, BoxGroup("Aim Shake")] private float _aimShakeDuration;
-    [SerializeField, BoxGroup("Aim Shake")] private float _aimShakePower;
-    [SerializeField, BoxGroup("Aim Shake")] private int _aimShakeVibrato;
-    [SerializeField, BoxGroup("Aim Shake")] private float _aimShakeRandomness;
 
+    [SerializeField, BoxGroup("SETUP")] private GameplayData _gameplayData;
     [SerializeField, BoxGroup("SETUP")] private Animator _stickmanAnimator;
     [SerializeField, BoxGroup("SETUP")] private CanvasGroup _aimUICanvas;
     [SerializeField, BoxGroup("SETUP")] private CameraController _cameraController;
@@ -37,7 +33,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField, BoxGroup("SETUP")] private Transform _shootingCamera;
     [SerializeField, BoxGroup("SETUP")] private GameObject _stickmanRig;
     [SerializeField, BoxGroup("SETUP")] private GameObject _stickmanModel;
-    [SerializeField, BoxGroup("SETUP")] private GameplayData _gameplayData;
     [SerializeField, BoxGroup("SETUP")] private AudioClip _gunShootAudio;
     [SerializeField, BoxGroup("SETUP")] private AudioClip _gunReloadAudio;
     [SerializeField, BoxGroup("SETUP")] private TextMeshProUGUI _bulletAmountText;
@@ -53,7 +48,13 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _disableAimTimer.OnTimerEnded += DisableAim;
-        _currentBulletAmount = _gameplayData.GunBulletAmount;
+        SettingsManager.Instance.OnSaveSettings += ReloadBulletAmount;
+        ReloadBulletAmount();
+    }
+
+    private void OnDestroy()
+    {
+        SettingsManager.Instance.OnSaveSettings -= ReloadBulletAmount;
     }
 
     private void Update()
@@ -96,10 +97,12 @@ public class PlayerController : MonoBehaviour
                     case TouchPhase.Moved:
                         UpdateAimPosition(touch);
                         _disableAimTimer.ResetCurrentTime();
+                        StartCoroutine(GodMode());
                         break;
                     case TouchPhase.Stationary:
                         UpdateAimPosition(touch);
                         _disableAimTimer.ResetCurrentTime();
+                        StartCoroutine(GodMode());
                         break;
                     case TouchPhase.Ended:
                         _mistouchTimer.StartTimer();
@@ -190,7 +193,7 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(SpawnBulletFromObjectPool());
             AudioManager.Instance.PlayAudio(_gunShootAudio, 1f, 0, false);
-            _shootingCamera.DOShakeRotation(_aimShakeDuration, _aimShakePower, _aimShakeVibrato, _aimShakeRandomness);
+            _shootingCamera.DOShakeRotation(_gameplayData.AimShakeDuration, _gameplayData.AimShakeStrength, _gameplayData.AimShakeVibrato, _gameplayData.AimShakeRandomness);
         }
     }
 
@@ -212,8 +215,8 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateAimPosition(Touch touch)
     {
-        _aimPositionX += touch.deltaPosition.x * _aimSensitivity * Time.deltaTime;
-        _aimPositionY += touch.deltaPosition.y * _aimSensitivity * Time.deltaTime;
+        _aimPositionX += touch.deltaPosition.x * _gameplayData.AimSensitivity * Time.deltaTime;
+        _aimPositionY += touch.deltaPosition.y * _gameplayData.AimSensitivity * Time.deltaTime;
     }
 
     private void SetAimUICanvas(float endValue, float duration)
@@ -257,8 +260,31 @@ public class PlayerController : MonoBehaviour
         _stickmanAnimator.SetTrigger(Reloading);
         AudioManager.Instance.PlayAudio(_gunReloadAudio, 1f, 0, false);
         yield return new WaitForSeconds(_gameplayData.GunReloadTime);
-        _currentBulletAmount = _gameplayData.GunBulletAmount;
-        _bulletAmountText.text = "x" + _currentBulletAmount;
+        ReloadBulletAmount();
         StartCoroutine(ShootingStateCoroutine());
+    }
+
+    private void ReloadBulletAmount()
+    {
+        _currentBulletAmount = _gameplayData.BulletAmount;
+        _bulletAmountText.text = "x" + _currentBulletAmount;
+    }
+
+    private IEnumerator GodMode()
+    {
+        if (_gameplayData.GodMode <= 0)
+            yield break;
+        
+        _bulletAmountText.text = "GOD MODE";
+
+        var spawnedBullet = _bulletObjectPool.GetPooledObject(0);
+        spawnedBullet.transform.position = _bulletSpawnPosition.position;
+        spawnedBullet.transform.rotation = _bulletSpawnPosition.rotation;
+
+        yield return new WaitForSeconds(2f);
+
+        _bulletObjectPool.SetPooledObject(spawnedBullet, 0);
+        spawnedBullet.transform.ResetLocalPos();
+        spawnedBullet.transform.ResetLocalRot();
     }
 }

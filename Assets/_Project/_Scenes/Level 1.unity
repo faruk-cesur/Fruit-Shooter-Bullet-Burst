@@ -166,7 +166,6 @@ GameObject:
   m_Component:
   - component: {fileID: 324435846}
   - component: {fileID: 324435845}
-  - component: {fileID: 324435844}
   - component: {fileID: 324435847}
   m_Layer: 0
   m_Name: Main Camera
@@ -175,14 +174,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &324435844
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324435843}
-  m_Enabled: 1
 --- !u!20 &324435845
 Camera:
   m_ObjectHideFlags: 0
@@ -812,6 +803,7 @@ GameObject:
   - component: {fileID: 704038088}
   - component: {fileID: 704038087}
   - component: {fileID: 704038090}
+  - component: {fileID: 704038091}
   m_Layer: 0
   m_Name: Item Spawner
   m_TagString: Untagged
@@ -877,8 +869,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704038085}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
-  m_LocalScale: {x: 10, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -5, z: 10}
+  m_LocalScale: {x: 14, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 68963725}
@@ -906,6 +898,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &704038091
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704038085}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1001 &745504675
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1309,13 +1328,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerState: 0
-  _aimSensitivity: 10
   _aimVerticalLimit: 45
   _aimHorizontalLimit: 45
-  _aimShakeDuration: 0.2
-  _aimShakePower: 10
-  _aimShakeVibrato: 0
-  _aimShakeRandomness: 0
+  _gameplayData: {fileID: 11400000, guid: 63f12b0a0fa317c4689ec4ad7526b18c, type: 2}
   _stickmanAnimator: {fileID: 445070224}
   _aimUICanvas: {fileID: 1147211725}
   _cameraController: {fileID: 471171560}
@@ -1327,7 +1342,6 @@ MonoBehaviour:
   _shootingCamera: {fileID: 680950355}
   _stickmanRig: {fileID: 445070223}
   _stickmanModel: {fileID: 445070221}
-  _gameplayData: {fileID: 11400000, guid: 63f12b0a0fa317c4689ec4ad7526b18c, type: 2}
   _gunShootAudio: {fileID: 8300000, guid: e3f2f9c2ae69c8d449e7ef9871038520, type: 3}
   _gunReloadAudio: {fileID: 8300000, guid: 3ea58d6c3c74e0d49bb6173930997c3a, type: 3}
   _bulletAmountText: {fileID: 1333134657}
@@ -2185,7 +2199,7 @@ Transform:
   m_GameObject: {fileID: 1662362066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 20, z: 20}
+  m_LocalScale: {x: 1, y: 40, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 68963725}
@@ -2368,7 +2382,7 @@ Transform:
   m_GameObject: {fileID: 1988062202}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 20, z: 20}
+  m_LocalScale: {x: 1, y: 40, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 68963725}

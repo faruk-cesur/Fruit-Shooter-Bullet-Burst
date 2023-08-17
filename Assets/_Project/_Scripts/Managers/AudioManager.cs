@@ -5,6 +5,7 @@ using UnityEngine;
 public class AudioManager : Singleton<AudioManager>
 {
     public AudioSource MainAudioSource;
+    public AudioListener Listener;
 
     private IEnumerator SetAudioCoroutine(AudioClip audioClip, float volume, float timeBeforePlaying, bool isAudioClipLoop)
     {
@@ -28,9 +29,6 @@ public class AudioManager : Singleton<AudioManager>
 
     public void PlayAudio(AudioClip audioClip, float volume, float waitBefore, bool isLoop)
     {
-        if (SettingsManager.Instance.IsSoundActivated)
-        {
-        }
-            StartCoroutine(SetAudioCoroutine(audioClip, volume, waitBefore, isLoop));
+        StartCoroutine(SetAudioCoroutine(audioClip, volume, waitBefore, isLoop));
     }
 }

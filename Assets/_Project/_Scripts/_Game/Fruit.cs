@@ -26,8 +26,9 @@ public class Fruit : MonoBehaviour, IShootable
 
     private void OnEnable()
     {
-        StartCoroutine(SetImmune());
+        StartCoroutine(SetImmuneForSpawnerCollider());
         _fruitRigidbody.isKinematic = false;
+        _isFruitGetShot = false;
         FruitJump();
     }
 
@@ -65,6 +66,8 @@ public class Fruit : MonoBehaviour, IShootable
         EarnMoneyOnShoot();
         SetFruitExplosionParticle(true);
         SetFruitModelVisual(false);
+        _fruitHealth.Heal(_fruitHealth.StartingHealth);
+        _fruitHealth.IsDead = false;
     }
 
     private void SetFruitModelVisual(bool value)
@@ -82,7 +85,7 @@ public class Fruit : MonoBehaviour, IShootable
         CurrencyManager.Instance.EarnMoney(_moneyReward);
     }
 
-    private IEnumerator SetImmune()
+    private IEnumerator SetImmuneForSpawnerCollider()
     {
         IsImmune = true;
         yield return new WaitForSeconds(1f);

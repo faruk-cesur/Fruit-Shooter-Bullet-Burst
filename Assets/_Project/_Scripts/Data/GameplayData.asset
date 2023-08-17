@@ -14,4 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <GunDamage>k__BackingField: 100
   <GunReloadTime>k__BackingField: 3.3
-  <GunBulletAmount>k__BackingField: 10
+  <BulletAmount>k__BackingField: 10
+  <AimSensitivity>k__BackingField: 10
+  <AimShakeDuration>k__BackingField: 0.2
+  <AimShakeStrength>k__BackingField: 10
+  <AimShakeVibrato>k__BackingField: 0
+  <AimShakeRandomness>k__BackingField: 0
