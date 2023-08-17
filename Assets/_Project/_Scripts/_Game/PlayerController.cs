@@ -189,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
     private void ShootOnReleaseTouch()
     {
-        if (PlayerState == PlayerStates.Aiming && !IsCurrentBulletAmountZero)
+        if (PlayerState == PlayerStates.Aiming && !IsCurrentBulletAmountZero && _gameplayData.GodMode <= 0)
         {
             StartCoroutine(SpawnBulletFromObjectPool());
             AudioManager.Instance.PlayAudio(_gunShootAudio, 1f, 0, false);
