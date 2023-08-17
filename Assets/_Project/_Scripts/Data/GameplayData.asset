@@ -15,8 +15,9 @@ MonoBehaviour:
   <GunDamage>k__BackingField: 100
   <GunReloadTime>k__BackingField: 3.3
   <BulletAmount>k__BackingField: 10
-  <AimSensitivity>k__BackingField: 10
+  <AimSensitivity>k__BackingField: 7
   <AimShakeDuration>k__BackingField: 0.2
-  <AimShakeStrength>k__BackingField: 10
+  <AimShakeStrength>k__BackingField: 5
   <AimShakeVibrato>k__BackingField: 0
   <AimShakeRandomness>k__BackingField: 0
+  <GodMode>k__BackingField: 0
